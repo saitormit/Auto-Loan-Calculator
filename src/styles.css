@@ -1,6 +1,7 @@
 h1 {
     font-family: Roboto, Arial, Helvetica, sans-serif;
     color:blue;
+    padding: 8px;
 }
 
 h2 {
@@ -9,18 +10,27 @@ h2 {
 
 p1 {
     font-family: Roboto, Arial, Helvetica, sans-serif;
+    padding: 8px;
+}
+
+body {
+    background-color: white;
+    margin-left: 60px;
+    margin-right: 60px;
 }
 
 .container {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 30px;
+    background-color: #EEF5FF;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 40px;
+    margin-bottom: 40px;
+    padding: 10px 30px;
     width: 300px;
 }
 
 .container h2 {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     text-align: start;
 }
 
@@ -32,24 +42,32 @@ p1 {
     font-family: Roboto;
     display: block;
     font-weight: bold;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
 }
 
-.form-group input[type="loanDuration"],
-.form-group input[type="APY"],
-.form-group input[type="downPayment"] {
-    width: 100%;
+.form-group input[type="number"] {
+    width: 95%;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
 .form-group button[type="button"] {
+    width: 100%;
     font-family: Roboto;
-    background-color: rgb(212, 236, 244);
-    font-size: 14px;
-    color: black;
+    font-weight: bold;
+    background-color: #687EFF;
+    font-size: 16px;
+    color: white;
+    border: #687EFF;
     border-radius: 6px;
     text-align: center;
-    padding: 4px 16px;
+    margin-top: 30px;
+    padding: 10px;
+}
+
+.form-group button[type="button"]:hover {
+    background-color: #4942E4;
+    color: rgb(234, 234, 234);
+    border: #4942E4;
 }
