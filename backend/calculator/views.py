@@ -30,7 +30,6 @@ def calculate_loan(request):
 
     if request.method == 'POST':
         form = LoanForm(request.POST)
-        print(form.is_valid())
         if form.is_valid():
             car_price = form.cleaned_data['car_price']
             loan_duration = form.cleaned_data['loan_duration']
@@ -38,7 +37,7 @@ def calculate_loan(request):
             down_payment = form.cleaned_data['down_payment']
             monthly_payment = calculate_monthly_payment(car_price, loan_duration, interest, down_payment)
             loaned_amount = car_price - down_payment
-            total_interest_amount = loaned_amount * interest * loan_duration/12
+            total_interest_amount = monthly_payment * loan_duration - loaned_amount
             total_price_amount = car_price + total_interest_amount
         else:
             print(form.errors)
@@ -47,8 +46,8 @@ def calculate_loan(request):
 
     return render(request, 'calculator/main.html',
                   {'form': form,
-                   'monthly_payment': monthly_payment,
+                   'monthly_payment': round(monthly_payment, 2),
                    'down_payment': down_payment,
                    'loaned_amount': loaned_amount,
-                   'total_interest_amount': total_interest_amount,
-                   'total_price_amount': total_price_amount})
+                   'total_interest_amount': round(total_interest_amount, 2),
+                   'total_price_amount': round(total_price_amount, 2)})

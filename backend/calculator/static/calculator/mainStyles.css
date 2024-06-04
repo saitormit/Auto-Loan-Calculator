@@ -15,8 +15,11 @@ p1 {
 
 body {
     background-color: white;
-    margin-left: 120px;
-    margin-right: 120px;
+    /*margin-left: 150px;
+    margin-right: 150px;*/
+    width: 76%;
+    margin-left: 12%;
+    margin-right: 12%;
 }
 
 .calculation_container {
