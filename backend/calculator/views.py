@@ -46,8 +46,8 @@ def calculate_loan(request):
 
     return render(request, 'calculator/main.html',
                   {'form': form,
-                   'monthly_payment': round(monthly_payment, 2),
+                   'monthly_payment': monthly_payment,
                    'down_payment': down_payment,
                    'loaned_amount': loaned_amount,
-                   'total_interest_amount': round(total_interest_amount, 2),
-                   'total_price_amount': round(total_price_amount, 2)})
+                   'total_interest_amount': total_interest_amount,
+                   'total_price_amount': total_price_amount})

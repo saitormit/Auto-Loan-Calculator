@@ -41,14 +41,13 @@
                     <input type="number" id="down_payment" name="down_payment" value="0">
                 </div>
                 <div class="form-group">
-<!--                    <button type="button">Calculate</button>-->
                     <input type="submit" value="Calculate">
                 </div>
             </form>
         </div>
     
         <div class="output_container">
-            <h2>Monthly payment: ${{ monthly_payment }}</h2>
+            <h2>Monthly payment: ${{ monthly_payment|floatformat:2 }}</h2>
 
             {% if down_payment %}
             <h4>Down payment: ${{ down_payment }} </h4>
@@ -59,11 +58,11 @@
             {% endif %}
 
             {% if total_interest_amount %}
-            <h4>Total interest amount: ${{ total_interest_amount }} </h4>
+            <h4>Total interest amount: ${{ total_interest_amount|floatformat:2 }} </h4>
             {% endif %}
 
             {% if total_price_amount %}
-            <h4>Total price amount: ${{ total_price_amount }} </h4>
+            <h4>Total price amount: ${{ total_price_amount|floatformat:2 }} </h4>
             {% endif %}
         </div>
     </div>
