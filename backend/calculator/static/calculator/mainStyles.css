@@ -2,6 +2,7 @@ h1 {
     font-family: Roboto, Arial, Helvetica, sans-serif;
     color:blue;
     padding: 8px;
+    font-size: 2.5em;
 }
 
 h2 {
@@ -86,9 +87,38 @@ body {
 .output_container {
     font-family: Roboto, Arial, Helvetica, sans-serif;
     flex: 5;
-    border-radius: 12px;
+    border-radius: 22px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-top: 40px;
     margin-bottom: 40px;
     padding: 10px 30px;
+}
+
+.principal_plot {
+    margin: auto;
+    width: 80%;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.amortization_table table{
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+    margin: auto;
+    width: 80%;
+    border-collapse: collapse;
+    margin-top: 40px;
+    margin-bottom: 40px;
+}
+
+.amortization_table th, td{
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+.amortization_table th {
+  background-color: #4942E4;
+  color: white;
 }

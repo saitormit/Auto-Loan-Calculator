@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render, HttpResponse
 from .forms import LoanForm
 
@@ -5,10 +7,6 @@ from .forms import LoanForm
 # Create your views here.
 def say_hello(request):
     return HttpResponse("Hello world")
-
-
-def home(request):
-    return render(request, "calculator/main.html")
 
 
 def calculate_monthly_payment(car_price, loan_duration, interest, down_payment):
@@ -21,12 +19,33 @@ def calculate_monthly_payment(car_price, loan_duration, interest, down_payment):
     return principal * (r * (1 + r)**loan_duration) / ((1 + r)**loan_duration - 1)
 
 
+def arrange_plot_data(principal, loan_duration, interest, monthly_payment):
+    plot_data, table_data = [], []
+    interest_pay, principal_pay = 0, 0
+    for month in range(loan_duration+1):
+        plot_data.append({'x': month, 'y': round(principal, 2)})
+        table_data.append({'Month': month,
+                           'Principal portion': round(principal_pay, 2),
+                           'Interest portion': round(interest_pay, 2),
+                           'Remaining balance': round(principal, 2)})
+        interest_pay = (interest/12/100) * principal
+        principal_pay = monthly_payment - interest_pay
+        principal -= principal_pay
+
+    return json.dumps(plot_data), json.dumps(table_data)
+
+
 def calculate_loan(request):
-    monthly_payment = None
-    loaned_amount = None
-    down_payment = 0
-    total_interest_amount = None
-    total_price_amount = None
+    # Default values
+    car_price = 25000
+    loan_duration = 48
+    interest = 4.5
+    down_payment = 5000
+    monthly_payment = calculate_monthly_payment(car_price, loan_duration, interest, down_payment)
+    loaned_amount = car_price - down_payment
+    total_interest_amount = monthly_payment * loan_duration - loaned_amount
+    total_price_amount = car_price + total_interest_amount
+    plot_data, table_data = arrange_plot_data(car_price-down_payment, loan_duration, interest, monthly_payment)
 
     if request.method == 'POST':
         form = LoanForm(request.POST)
@@ -39,6 +58,8 @@ def calculate_loan(request):
             loaned_amount = car_price - down_payment
             total_interest_amount = monthly_payment * loan_duration - loaned_amount
             total_price_amount = car_price + total_interest_amount
+            plot_data, table_data = arrange_plot_data(car_price - down_payment, loan_duration, interest, monthly_payment)
+
         else:
             print(form.errors)
     else:
@@ -46,8 +67,13 @@ def calculate_loan(request):
 
     return render(request, 'calculator/main.html',
                   {'form': form,
+                   'car_price': car_price,
+                   'loan_duration': loan_duration,
+                   'interest': interest,
                    'monthly_payment': monthly_payment,
                    'down_payment': down_payment,
                    'loaned_amount': loaned_amount,
                    'total_interest_amount': total_interest_amount,
-                   'total_price_amount': total_price_amount})
+                   'total_price_amount': total_price_amount,
+                   'plot_data': plot_data,
+                   'table_data': table_data})

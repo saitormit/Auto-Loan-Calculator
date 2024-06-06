@@ -8,8 +8,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Radio+Canada+Big:ital,wght@0,400..700;1,400..700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Auto Loan Calculator</title>
     <link rel="stylesheet" href="{% static 'calculator/mainStyles.css' %}">
+    <script src="{% static 'calculator/charts.js' %}"></script>
 </head>
 <body>
     <h1>Auto Loan Calculator</h1>
@@ -26,19 +28,19 @@
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="car_price">Car price ($)</label>
-                    <input type="number" id="car_price" name="car_price" value="25000" required>
+                    <input type="number" id="car_price" name="car_price" value="{{ car_price }}" required>
                 </div>
                 <div class="form-group">
                     <label for="loan_duration">Loan duration (months)</label>
-                    <input type="number" id="loan_duration" name="loan_duration" value="36" required>
+                    <input type="number" id="loan_duration" name="loan_duration" value="{{ loan_duration }}" required>
                 </div>
                 <div class="form-group">
                     <label for="interest">Interest rate (%)</label>
-                    <input type="number" step="0.1" id="interest" name="interest" value="4.5" required>
+                    <input type="number" step="0.1" id="interest" name="interest" value="{{ interest }}" required>
                 </div>
                 <div class="form-group">
                     <label for="down_payment">Down payment ($)</label>
-                    <input type="number" id="down_payment" name="down_payment" value="0">
+                    <input type="number" id="down_payment" name="down_payment" value="{{ down_payment }}">
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Calculate">
@@ -49,23 +51,85 @@
         <div class="output_container">
             <h2>Monthly payment: ${{ monthly_payment|floatformat:2 }}</h2>
 
-            {% if down_payment %}
             <h4>Down payment: ${{ down_payment }} </h4>
-            {% endif %}
 
-            {% if loaned_amount %}
             <h4>Loaned amount: ${{ loaned_amount }}</h4>
-            {% endif %}
 
-            {% if total_interest_amount %}
             <h4>Total interest amount: ${{ total_interest_amount|floatformat:2 }} </h4>
-            {% endif %}
 
-            {% if total_price_amount %}
             <h4>Total price amount: ${{ total_price_amount|floatformat:2 }} </h4>
-            {% endif %}
         </div>
     </div>
 
+    <div class="principal_plot">
+        <canvas id="principal_chart"></canvas>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            var ctx = document.getElementById('principal_chart').getContext('2d');
+            var principalData = JSON.parse('{{ plot_data|safe }}');
+            var principal_chart = new Chart(ctx, {
+                type: 'scatter',
+                data: {
+                    datasets: [{
+                        label: 'Principal over the loan',
+                        data: principalData,
+                        backgroundColor: 'rgba(104, 126, 255, 0.7)'
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom'
+                        },
+                        y: {
+                            type: 'linear',
+                            position: 'left'
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+
+    <div class="amortization_table">
+        <table id="amortization_table">
+            <tr>
+                <th>Month</th>
+                <th>Principal portion</th>
+                <th>Interest portion</th>
+                <th>Remaining Balance</th>
+            </tr>
+        </table>
+    </div>
+    <script>
+        var table = document.getElementById("amortization_table");
+
+        var data = JSON.parse('{{ table_data|escapejs }}');
+
+        // Iterate over the list of dictionaries
+        data.forEach(function(row) {
+            // Create a new row
+            var newRow = table.insertRow();
+        
+            // Iterate over the keys in the dictionary and populate cells
+            for (var key in row) {
+                if (row.hasOwnProperty(key)) {
+                    var cell = newRow.insertCell();
+                    if (key === 'Principal portion' || key === 'Interest portion' || key === 'Remaining balance') {
+                        if (Math.abs(row[key]) < 0.0001){
+                            cell.innerHTML = '$' + '0'; // Display '0' instead of '-0.0'
+                        }
+                        // Add a dollar sign ($) before displaying the value
+                        cell.innerHTML = '$' + row[key];
+                    } else {
+                        // Display other values as is
+                        cell.innerHTML = row[key];
+                    }   
+                }
+            }
+        });
+    </script>
 </body>
 </html>
