@@ -39,7 +39,7 @@ def calculate_loan(request):
     # Default values
     car_price = 25000
     loan_duration = 48
-    interest = 4.5
+    interest = 4.50
     down_payment = 5000
     monthly_payment = calculate_monthly_payment(car_price, loan_duration, interest, down_payment)
     loaned_amount = car_price - down_payment
