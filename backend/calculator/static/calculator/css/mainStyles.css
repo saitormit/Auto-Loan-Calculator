@@ -109,6 +109,10 @@ input[type="text"]{
     height: auto;
 }
 
+.refinance-inputs {
+    display: none;
+}
+
 /* Style the navigation links */
 .nav-link {
     font-family: Roboto, Arial, Helvetica, sans-serif;
