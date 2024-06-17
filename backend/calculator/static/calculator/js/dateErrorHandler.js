@@ -1,3 +1,4 @@
+//Constrain date input
 document.addEventListener('DOMContentLoaded', function() {
     var dateInputs = document.querySelectorAll('input[name="start_date"], input[name="refi_start_date"]');
     dateInputs.forEach(function(dateInput) {
