@@ -1,7 +1,6 @@
 {% load static %}
-
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>Auto Loan Calculator</title>
     <link rel="stylesheet" href="{% static 'calculator/css/mainStyles.css' %}">
-    <script src="{% static 'calculator/js/charts.js' %}"></script>
+<!--    <script src="{% static 'calculator/js/charts.js' %}"></script>-->
 </head>
 <body>
     <h1>Auto Loan Calculator</h1>
@@ -46,27 +45,49 @@
                     </div>
                     <div class="form-group">
                         <label for="start_date">Start date</label>
-                        <input type="text" id="start_date" name="start_date">
+                        <input type="text" id="start_date" name="start_date" placeholder="MM/DD/YYYY" value="{{ form.date.value|default:'' }}" required>
+                        {% if form.date.errors %}
+                            <div class="error">{{ form.date.errors }}</div>
+                        {% endif %}
                     </div>
                     <br>
                     <a href="#" class="nav-link" onclick="navigateSection(event, 'advanced_section')">Advanced option</a>
                 </div>
                 <div class="form-section" id="advanced_section">
                     <div class="form-group">
-                        <label for="advanced_payment">Advanced payment ($)</label>
-                        <input type="number" id="advanced_payment" name="advanced_payment" value=0>
+                        <label for="early_payment">Early payment ($)</label>
+                        <input type="number" id="early_payment" name="early_payment" value=0>
                     </div>
                     <div class="form-group">
                         <p>Refinance option</p>
                         <div class="radio-buttons">
                             <label>
-                                <input type="radio" name="refinance_button" value="yes"> Yes
+                                <input type="radio" name="refinance_button" id="refi_yes"> Yes
                             </label>
                             <label>
-                                <input type="radio" name="refinance_button" value="no" checked> No
+                                <input type="radio" name="refinance_button" id="refi_no" checked> No
                             </label>
                         </div>
+                        <br>
+                        <div class="refinance-inputs" id="refinance-inputs">
+                            <div class="form-group">
+                                <label for="refi_interest">New interest rate (%)</label>
+                                <input type="number" step="0.01" id="refi_interest" name="refi_interest" value="{{ refi_interest}}">
+                            </div>
+                            <div class="form-group">
+                                <label for="refi_loan_duration">New loan duration (months)</label>
+                                <input type="number" id="refi_loan_duration" name="refi_loan_duration" value = "{{ refi_loan_duration }}">
+                            </div>
+                            <div class="form-group">
+                                <label for="refi_start_date">Refinance start date</label>
+                                <input type="text" id="refi_start_date" name="refi_start_date" placeholder="MM/DD/YYYY" value="{{ form.date.value|default:'' }}">
+                                {% if form.date.errors %}
+                                    <div class="error">{{ form.date.errors }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
                     </div>
+                    <script src="{% static 'calculator/js/refinance_option.js' %}"></script>
                     <br>
                     <a href="#" class="nav-link" onclick="navigateSection(event, 'standard_section')">Back</a>
                 </div>
@@ -76,6 +97,7 @@
             </form>
         </div>
         <script src="{% static 'calculator/js/advanced_inputs.js' %}"></script>
+        <script src="{% static 'calculator/js/dateErrorHandler.js' %}"></script>
     
         <div class="output_container">
             <h2>Monthly payment: ${{ monthly_payment|floatformat:2 }}</h2>
@@ -126,6 +148,7 @@
         <table id="amortization_table">
             <tr>
                 <th>Month</th>
+                <th>Payment date</th>
                 <th>Principal portion</th>
                 <th>Interest portion</th>
                 <th>Remaining Balance</th>
