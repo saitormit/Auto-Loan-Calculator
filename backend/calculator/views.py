@@ -54,6 +54,7 @@ def calculate_loan(request):
             refi_start_date = form.cleaned_data['refi_start_date']
             refi_interest = form.cleaned_data.get('refi_interest')
             refi_loan_duration = form.cleaned_data.get('refi_loan_duration')
+
             monthly_payment = calculate_monthly_payment(car_price, loan_duration, interest, down_payment)
             loaned_amount = car_price - down_payment
             total_interest_amount = monthly_payment * loan_duration - loaned_amount

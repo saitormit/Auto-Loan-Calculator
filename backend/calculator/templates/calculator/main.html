@@ -109,6 +109,31 @@
             <h4>Total interest amount: ${{ total_interest_amount|floatformat:2 }} </h4>
 
             <h4>Total price amount: ${{ total_price_amount|floatformat:2 }} </h4>
+
+            <!-- Canvas where the chart will be rendered -->
+            <div class="interestDoughnutChart">
+                <canvas id="interestDoughnutChart"></canvas>
+            </div>
+            <script>
+                // Get data from Django context
+                var category1 = {{ car_price }};
+                var category2 = {{ total_interest_amount|floatformat:2 }};
+
+                var ctx = document.getElementById('interestDoughnutChart').getContext('2d');
+                var myPieChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Car price', 'Interest amount'], // Labels for the chart
+                        datasets: [{
+                            data: [category1, category2], // Values for each category
+                            backgroundColor: ['#1F51FF', '#1434A4'], // Colors for each category
+                        }]
+                    },
+                    options: {
+                        responsive: true
+                    }
+                });
+            </script>
         </div>
     </div>
 
