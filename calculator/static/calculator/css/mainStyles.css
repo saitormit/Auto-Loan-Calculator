@@ -1,0 +1,202 @@
+h1 {
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+    color:blue;
+    font-size: 2.5em;
+}
+
+h2, h3 {
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+}
+
+p1 {
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+}
+
+body {
+    background-color: white;
+    /*margin-left: 150px;
+    margin-right: 150px;*/
+    width: 66%;
+    margin-left: 22%;
+    margin-right: 12%;
+    margin-bottom: 40px;
+}
+
+.calculation_container {
+    display: flex;
+    gap: 20px;
+}
+
+.input_container {
+    flex: 2;
+    background-color: #EEF5FF;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 40px;
+    margin-bottom: 60px;
+    padding: 10px 25px;
+    /* width: 300px; */
+}
+
+.input_container h2 {
+    margin-bottom: 30px;
+    text-align: start;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label, p {
+    font-family: Roboto;
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.form-group input[type="number"],
+input[type="text"]{
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.form-group input[type="submit"] {
+    width: 100%;
+    font-family: Roboto;
+    font-weight: bold;
+    background-color: #687EFF;
+    font-size: 16px;
+    color: white;
+    border: #687EFF;
+    border-radius: 6px;
+    text-align: center;
+    margin-top: 30px;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.form-group input[type="submit"]:hover {
+    background-color: #4942E4;
+    color: rgb(234, 234, 234);
+    border: #4942E4;
+}
+
+.radio-buttons {
+    display: flex;
+    align-items: center;
+}
+
+.radio-buttons label {
+    margin-right: 10px;
+    font-weight: normal;
+}
+
+/* Style the form sections */
+.form-section {
+    display: none;
+    opacity: 0;
+    overflow: auto;
+    transition: opacity 0.5s ease, height 0.5s ease;
+}
+
+.form-section.active {
+    display: block;
+    opacity: 1;
+    height: auto;
+}
+
+.refinance-inputs {
+    display: none;
+}
+
+/* Style the navigation links */
+.nav-link {
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+    color: #007BFF;
+    cursor: pointer;
+    text-decoration: none;
+    padding: 0 10px;
+}
+
+.nav-link:hover {
+    text-decoration: underline;
+}
+
+.output_container {
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+    flex: 5;
+    border-radius: 22px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-top: 40px;
+    margin-bottom: 60px;
+    padding: 10px 30px;
+}
+
+.interestDoughnutChart {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 300px;
+    margin-top: 40px;
+    margin-bottom: 60px;
+}
+
+.principal_plot {
+    margin: auto;
+    width: 90%;
+    margin-top: 40px;
+    margin-bottom: 60px;
+    justify-content: center;
+}
+
+.amortization_table table{
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+    margin: auto;
+    width: 90%;
+    border-collapse: collapse;
+    margin-top: 40px;
+    margin-bottom: 60px;
+}
+
+.amortization_table th, td{
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+tr:nth-child(even){background-color: #f2f2f2}
+
+.amortization_table th {
+    background-color: #4942E4;
+    color: white;
+}
+
+/* Sidebar styling */
+.wrapper {
+    display: flex;
+    align-items: flex-start; /* Align items to the top */
+}
+
+.sidebar {
+    width: 15%;
+    background-color: #F5F7F8;
+    padding: 15px;
+    height: 100vh; /* Full height */
+    position: fixed; /* Fix the sidebar to the left */
+    left: 0;
+    top: 0;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 15px;
+}
+
+.sidebar ul li {
+    font-family: Roboto, Arial, Helvetica, sans-serif;
+    margin-bottom: 20px;
+}
