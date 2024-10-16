@@ -1,10 +1,12 @@
 import json
 
 from django.shortcuts import render, HttpResponse
+from django.shortcuts import redirect, get_object_or_404
 from .forms import LoanForm
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
+from .models import LoanDetails
 
 
 # Create your views here.
@@ -61,6 +63,17 @@ def calculate_loan(request):
             total_price_amount = car_price + total_interest_amount
             plot_data, table_data = arrange_display_data(car_price - down_payment, loan_duration, interest, monthly_payment, start_date)
 
+            # Saved data in database
+            loan_details = LoanDetails(
+                car_price = car_price,
+                loan_duration=loan_duration,
+                start_date=start_date,
+                interest=interest,
+                down_payment=down_payment,
+                monthly_payment=monthly_payment
+            )
+            loan_details.save()
+
         else:
             print(form.errors)
             car_price = loan_duration = interest = down_payment = start_date = refi_interest = refi_loan_duration = refi_start_date = None
@@ -82,6 +95,8 @@ def calculate_loan(request):
         total_price_amount = car_price + total_interest_amount
         plot_data, table_data = arrange_display_data(car_price - down_payment, loan_duration, interest, monthly_payment, start_date)
 
+    loan_calculation = LoanDetails.objects.all()
+
     return render(request, 'calculator/main.html',
                   {'form': form,
                    'car_price': car_price,
@@ -97,4 +112,11 @@ def calculate_loan(request):
                    'total_interest_amount': total_interest_amount,
                    'total_price_amount': total_price_amount,
                    'plot_data': plot_data,
-                   'table_data': table_data})
+                   'table_data': table_data,
+                   'loan_details': loan_calculation})
+
+
+def delete_loan(request, loan_id):
+    loan = get_object_or_404(LoanDetails, id=loan_id)
+    loan.delete()
+    return redirect('calculate_loan')

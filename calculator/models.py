@@ -1,10 +1,10 @@
 from django.db import models
 
 # Create your models here.
-class Loan(models.Model):
+class LoanDetails(models.Model):
     car_price = models.DecimalField(max_digits=10, decimal_places=2)
     loan_duration = models.IntegerField()  # Duration in months
-    interest_rate = models.DecimalField(max_digits=5, decimal_places=2)  # Interest rate percentage
+    interest = models.DecimalField(max_digits=5, decimal_places=2)  # Interest rate percentage
     down_payment = models.DecimalField(max_digits=10, decimal_places=2)  # Down payment amount
     start_date = models.DateField()  # Start date of the loan
     monthly_payment = models.DecimalField(max_digits=10, decimal_places=2)  # Monthly payment

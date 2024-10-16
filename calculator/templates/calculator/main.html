@@ -15,10 +15,23 @@
 </head>
 <body>
     <h1>Auto Loan Calculator</h1>
-    <p1>Welcome to the Auto Loan Calculator. Insert your car's loan information to calculate your financing details and make
-         the best decision for you!
-    </p1>
-    <br>
+<!--    <p1>Welcome to the Auto Loan Calculator. Insert your car's loan information to calculate your financing details and make-->
+<!--         the best decision for you!-->
+<!--    </p1>-->
+    <div class="wrapper">
+        <nav class="sidebar">
+            <h3>Saved Loan Calculation</h3>
+            <ul>
+                {% for loan in loan_details %}
+                    <li>Loan for {{ loan.car_price }} calculated on {{ loan.calculated_at }} - Monthly Payment: {{ loan.monthly_payment }}
+                        <a href="{% url 'delete_loan' loan.id %}">
+                            <img src="{% static 'calculator/img/trashcan_icon.png' %}" alt="Delete" style="width:16px; height:16px;" />
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </nav>
+    </div>
 
     <div class="calculation_container">
         
