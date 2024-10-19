@@ -8,6 +8,7 @@ This Auto Loan Calculator is a web application that allows any user to calculate
 - Principal Decay Visualization: The decay of the principal is visualized through:
   - Scatter Plot: Displays the principal amount remaining over the course of the loan.
   - Tabular Data: Shows a month-by-month breakdown of the principal remaining.
+- Data Persistence: Stores loan calculation outputs in a PostgreSQL database, allowing users to save and revisit past calculations.
 
 ## Usage
 #### 1. Input the following details in the form:
@@ -22,3 +23,15 @@ This Auto Loan Calculator is a web application that allows any user to calculate
 - Doughnut Chart: Visualizes the ratio of the car price paid to the total interest paid over the loan.
 - Scatter Plot: Shows how the principal decreases over time.
 - Table: Lists a month-by-month breakdown of the remaining principal.
+
+## Technology Used
+
+- Backend: Django (Python)
+- Database: PostgreSQL
+- Frontend: HTML, CSS, JavaScript
+- Charts and Visualization: Chart.js for doughnut and scatter plots
+
+## Future Improvements
+- Add a user authentication system to allow users to track their loan calculations across sessions.
+- Allow the user to select saved loans and compare them on a different UI fragment
+- Finalize early payment and refinancing features
