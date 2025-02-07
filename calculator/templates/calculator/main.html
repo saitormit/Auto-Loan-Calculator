@@ -23,9 +23,13 @@
             <h3>Saved Loan Calculation</h3>
             <ul>
                 {% for loan in loan_details %}
-                    <li>Loan for {{ loan.car_price }} calculated on {{ loan.calculated_at }} - Monthly Payment: {{ loan.monthly_payment }}
+                    <li>Loan for ${{ loan.car_price }} calculated on {{ loan.calculated_at }}<br>
+                        Down Payment: ${{ loan.down_payment }}<br>
+                        Interest: {{ loan.interest }}%<br>
+                        Loan Period: {{ loan.loan_duration }} months<br>
+                        Monthly Payment: ${{ loan.monthly_payment }}
                         <a href="{% url 'delete_loan' loan.id %}">
-                            <img src="{% static 'calculator/img/trashcan_icon.png' %}" alt="Delete" style="width:16px; height:16px;" />
+                            <img src="{% static 'calculator/img/trashcan_icon.png' %}" alt="Delete" style="width:16px; height:16px; margin-left: 5px" />
                         </a>
                     </li>
                 {% endfor %}
